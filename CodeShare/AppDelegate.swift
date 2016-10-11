@@ -16,7 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		// 封装一个设置 window 的根控制器的方法
+		configureRootVC()
+		
 		return true
+	}
+	func configureRootVC() {
+		window = UIWindow.init(frame: UIScreen.mainScreen().bounds)
+		
+		window?.rootViewController = CSTabBarController.init()
+		
+		window?.makeKeyAndVisible()
 	}
 
 	func applicationWillResignActive(application: UIApplication) {
