@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0DC061EE43643E0A3EF5ABCC /* Pods_CodeShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F8C9ACB291B72F597BB6BA /* Pods_CodeShare.framework */; };
 		D18883D21DACBED100515D71 /* CSRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18883D11DACBED100515D71 /* CSRegisterViewController.swift */; };
+		D1AF15EA1DADD0EA0034BA1C /* CodeShareInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF15E91DADD0EA0034BA1C /* CodeShareInit.swift */; };
 		D1D9DB2B1DAC780D00908A1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D9DB2A1DAC780D00908A1C /* AppDelegate.swift */; };
 		D1D9DB2D1DAC780D00908A1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D9DB2C1DAC780D00908A1C /* ViewController.swift */; };
 		D1D9DB301DAC780D00908A1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1D9DB2E1DAC780D00908A1C /* Main.storyboard */; };
@@ -22,6 +23,8 @@
 		65F8C9ACB291B72F597BB6BA /* Pods_CodeShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7983AAE78E027D5B2BDB1D76 /* Pods-CodeShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeShare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodeShare/Pods-CodeShare.debug.xcconfig"; sourceTree = "<group>"; };
 		D18883D11DACBED100515D71 /* CSRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSRegisterViewController.swift; sourceTree = "<group>"; };
+		D1AF15E91DADD0EA0034BA1C /* CodeShareInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeShareInit.swift; sourceTree = "<group>"; };
+		D1AF15EB1DADDD680034BA1C /* CodeShareHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeShareHeader.h; sourceTree = "<group>"; };
 		D1D9DB271DAC780D00908A1C /* CodeShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1D9DB2A1DAC780D00908A1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1D9DB2C1DAC780D00908A1C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 		D1D9DB1E1DAC780D00908A1C = {
 			isa = PBXGroup;
 			children = (
+				D1AF15EB1DADDD680034BA1C /* CodeShareHeader.h */,
 				D1D9DB291DAC780D00908A1C /* CodeShare */,
 				D1D9DB281DAC780D00908A1C /* Products */,
 				2ED7791736F7814DE0401863 /* Pods */,
@@ -93,6 +97,7 @@
 				D1D9DB311DAC780D00908A1C /* Assets.xcassets */,
 				D1D9DB331DAC780D00908A1C /* LaunchScreen.storyboard */,
 				D1D9DB361DAC780D00908A1C /* Info.plist */,
+				D1AF15E91DADD0EA0034BA1C /* CodeShareInit.swift */,
 			);
 			path = CodeShare;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				D1D9DB2D1DAC780D00908A1C /* ViewController.swift in Sources */,
 				D1D9DB401DAC79BE00908A1C /* CSTabBarController.swift in Sources */,
 				D18883D21DACBED100515D71 /* CSRegisterViewController.swift in Sources */,
+				D1AF15EA1DADD0EA0034BA1C /* CodeShareInit.swift in Sources */,
 				D1D9DB2B1DAC780D00908A1C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +373,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1000phone.CodeShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeShareHeader.h";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Debug;
 		};
@@ -379,6 +387,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1000phone.CodeShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeShareHeader.h";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Release;
 		};
