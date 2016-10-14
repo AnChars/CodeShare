@@ -11,7 +11,7 @@ import Alamofire
 import ReactiveCocoa
 import JKCategories
 
-class CSRegisterViewController: UIViewController {
+class CSRegisterViewController: ViewController {
 
 	dynamic var time = -1
 	var timer : NSTimer!
@@ -136,13 +136,14 @@ class CSRegisterViewController: UIViewController {
 		registerBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
 		registerBtn.jk_setBackgroundColor(UIColor.greenColor(), forState: UIControlState.Normal)
 		registerBtn.jk_setBackgroundColor(UIColor.lightGrayColor(), forState: UIControlState.Highlighted)
-		registerBtn.jk_setBackgroundColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
+		registerBtn.jk_setBackgroundColor(UIColor ( red: 0.3175, green: 0.9413, blue: 0.6104, alpha: 1.0 ), forState: UIControlState.Disabled)
 		self.view.addSubview(registerBtn)
 		registerBtn.snp_makeConstraints { (make) in
 			make.left.right.equalTo(0)
 			make.height.equalTo(48)
 			make.top.equalTo(code.snp_bottom).offset(200)
 		}
+		
 		
 		codeRightBtn.enabled = false
 		registerBtn.enabled = false
@@ -231,22 +232,38 @@ class CSRegisterViewController: UIViewController {
 		// 注册
 //		service=User.Register&phone=18513017173&password=111111&verificationCode=1234
 		registerBtn.jk_handleControlEvents(UIControlEvents.TouchUpInside) { (sender) in
-			Alamofire.request(.POST, "https://www.1000phone.tk", parameters: [
-					"service": "User.Register",
-					"phone": username.text!,
-					"password": (password.text! as NSString).jk_md5String,
-					"verificationCode": code.text!,
-				], encoding: ParameterEncoding.URLEncodedInURL, headers: nil).responseJSON(completionHandler: { (response) in
-					// 如果请求成功
-					if response.result.isSuccess {
-						print(response.result.value!)
-						
-						self.navigationController?.popViewControllerAnimated(true)
-					}else {
-						print("网络不给力，请稍后再试")
-						
-					}
-				})
+//			Alamofire.request(.POST, "https://www.1000phone.tk", parameters: [
+//					"service": "User.Register",
+//					"phone": username.text!,
+//					"password": (password.text! as NSString).jk_md5String,
+//					"verificationCode": code.text!,
+//				], encoding: ParameterEncoding.URLEncodedInURL, headers: nil).responseJSON(completionHandler: { (response) in
+//					// 如果请求成功
+//					if response.result.isSuccess {
+//						print(response.result.value!)
+//						
+//						self.navigationController?.popViewControllerAnimated(true)
+//					}else {
+//						print("网络不给力，请稍后再试")
+//						
+//					}
+//				})
+			CSNetHelp.request(parameters:  [
+				"service": "User.Register",
+				"phone": username.text!,
+				"password": (password.text! as NSString).jk_md5String,
+				"verificationCode": code.text!,
+				])
+			.responseJSON({ (data, success) in
+				if success {
+					// 返回的肯定是用户数据
+					self.navigationController?.popViewControllerAnimated(true)
+				}else {
+					// 返回的是错误原因
+					UIAlertView.init(title: "有错误", message: data as? String, delegate: nil, cancelButtonTitle: "我知道了").show()
+				}
+			})
+			
 		}
 		// 我们在做一些关于用户敏感信息的数据交互时，一般都要对数据进行加密
 		// MD5 严格来讲，并不属于加密算法，因为 MD5 并没有解密过程，只是对数据进行提取特征加密，会破坏原数据的意义。

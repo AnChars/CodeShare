@@ -10,6 +10,7 @@
 #define CodeShareHeader_h
 
 #import <SMS_SDK/SMSSDK.h>
+#import "YZDisplayViewHeader.h"
 
 
 #endif /* CodeShareHeader_h */

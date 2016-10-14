@@ -15,7 +15,7 @@ import Alamofire
 // SnapKit
 
 
-class CSLoginViewController: UIViewController {
+class CSLoginViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,21 +122,24 @@ class CSLoginViewController: UIViewController {
 		// 设置登录按钮的点击事件
 		login.jk_handleControlEvents(UIControlEvents.TouchUpInside) { (sender) in
 			print("点击登录按钮")
-			Alamofire.request(.POST, "https://www.1000phone.tk", parameters: [
+			// 使用自己封装的网络帮助类请求数据
+			CSNetHelp.request(parameters: [
 				"service": "User.Login",
 				"phone": username.text!,
-				"password": password.text!,
-				], encoding: ParameterEncoding.URLEncodedInURL, headers: nil).responseJSON(completionHandler: { (response) in
-					// 如果请求成功
-					if response.result.isSuccess {
-						print(response.result.value!)
-						
-						self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-					}else {
-						print("网络不给力，请稍后再试")
-						
-					}
-				})
+				// 如果注册使用的加密，那么登录也要用相同的加密方式
+				"password": (password.text! as NSString).jk_md5String,
+				])
+			.responseJSON({ (data, success) in
+				if success {
+					// 配置用户数据
+					CSUserModel.loggin(with: data as! [String: AnyObject])
+					
+					self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+				}else {
+					UIAlertView.init(title: "错误", message: data as? String, delegate: nil, cancelButtonTitle: "我知道了").show()
+				}
+				
+			})
 		}
 		
 		self.view.addSubview(login)
@@ -147,22 +150,22 @@ class CSLoginViewController: UIViewController {
 		}
 		
 		// 导航条上的按钮
-		let backBtn = UIButton.init(type: UIButtonType.Custom)
-		backBtn.setImage(UIImage.init(named: "返回按钮"), forState: UIControlState.Normal)
-		
-		let backBarBtn = UIBarButtonItem.init(customView: backBtn)
-		self.navigationItem.leftBarButtonItem = backBarBtn
-		backBtn.frame = CGRectMake(0, 0, 24, 32)
-		
+//		let backBtn = UIButton.init(type: UIButtonType.Custom)
+//		backBtn.setImage(UIImage.init(named: "返回按钮"), forState: UIControlState.Normal)
+//		
+//		let backBarBtn = UIBarButtonItem.init(customView: backBtn)
+//		self.navigationItem.leftBarButtonItem = backBarBtn
+//		backBtn.frame = CGRectMake(0, 0, 24, 32)
+//		
 		let registerBtn = UIButton.init(type: UIButtonType.Custom)
 		registerBtn.setTitle("注册", forState: UIControlState.Normal)
 		registerBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-		
+//
 		let registerBarBtn = UIBarButtonItem.init(customView: registerBtn)
 		self.navigationItem.rightBarButtonItem = registerBarBtn
 		registerBtn.frame = CGRectMake(0, 0, 44, 32)
-		
-		backBtn.addTarget(self, action: #selector(self.back), forControlEvents: UIControlEvents.TouchUpInside)
+//
+//		backBtn.addTarget(self, action: #selector(self.back), forControlEvents: UIControlEvents.TouchUpInside)
 		registerBtn.addTarget(self, action: #selector(self.register), forControlEvents: UIControlEvents.TouchUpInside)
     }
 	
